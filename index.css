@@ -1,0 +1,102 @@
+/* Page structure */
+
+#values {
+    width: 82%;
+    height: 100px;
+    border: none;
+    border-bottom: 3px solid rgb(127, 119, 235);
+    background-color: rgb(235, 230, 255);
+    padding: 5px;
+    font-family: Iosevka, sans-serif;
+    overflow:hidden;
+
+}
+
+#menu {
+  flex-direction: column;
+  text-align: center;
+  width: 49%;
+}
+
+#ifs-select {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  font-size: medium;
+  display: inline-block;
+  background-color: rgb(235, 230, 255);
+  min-width: auto;
+  z-index: 1;
+  border: none;
+  transition-duration: 0.4s;
+}
+
+#ifs-select:hover {
+  border-bottom: 3px solid rgb(127, 119, 235);
+}
+
+#refresh {
+  border: 2px solid rgb(127, 119, 235);
+  background-color:white; /* Green */
+  color: black;
+  padding: 9px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  transition-duration: 0.4s;
+}
+
+#refresh:hover {
+  background-color:rgb(127, 119, 235); /* Green */
+  color: white;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    width: auto;
+    display: table;
+    margin: auto;
+    display: table-cell;
+    vertical-align: middle;
+    align-items: center;
+    background-color: rgb(235, 230, 255);
+    font: normal normal 17px/25px Roboto, Arial, sans-serif;
+  }
+    
+  h2 {
+    padding: 15px 0 0.12px 0;
+    margin-top: 0.8em;
+    font-size: 25px;
+    font-weight: bold;
+    color: #016;font-family: 'Lato', Arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: .02ex;
+    line-height: 100%;
+    text-align: center;
+  }
+
+   /* unvisited link */
+a:link {
+  color: rgb(105, 99, 187);
+  border: none;
+}
+
+/* visited link */
+a:visited {
+  color: rgb(114, 107, 207);
+  border: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: rgb(147, 140, 243);
+  text-shadow: rgb(173, 168, 190);
+}
+
+  
+
+  
