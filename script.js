@@ -32,7 +32,8 @@
          */
         readIfs = function () {
             values = document.getElementById("values").value.trim().split(/\s+/);
-            for (var i = 0; i < values.length; i++) values[i]=values[i]*1;
+            // Transforma tipo texto en tipo NaN
+            for (var i = 0; i < values.length; i++) values[i]=Number(values[i]);
             if (!(values.length > 0 && values.length % 7 == 0)) {
                 alert("Invalid IFS");
             } else {
@@ -46,16 +47,16 @@
         /*
          * Plots a point (in world coordinates) into the pixel array.
          */
-        plot = function (x, y, c) {
+        plot = function (c) {
             var px = scaleX * x + offsetX,
                 py = scaleY * y + offsetY,
-                base = Math.floor(py) * (width * 4) + Math.floor(px) * 4;
+                base = (Math.floor(py) * width + Math.floor(px))*4;
 
-            if (!c) c = colors[0]; else c = colors[c % 8];
+            elige_color_probabilidad = colors[c % 8];
 
-            pixels[base] = c[0];
-            pixels[base+1] = c[1];
-            pixels[base+2] = c[2];
+            pixels[base] = elige_color_probabilidad[0];
+            pixels[base+1] = elige_color_probabilidad[1];
+            pixels[base+2] = elige_color_probabilidad[2];
             pixels[base+3] = 255;
 
         },
@@ -71,9 +72,10 @@
                 var t = fractal[i];
                 if (r <= (probabilityThreshold += t[6])) {
                     var oldx = x;
+                    // Nuevos valores de X e Y
                     x = t[0] * x + t[1] * y + t[4];
                     y = t[2] * oldx + t[3] * y + t[5];
-                    return i;
+                    return i;  // Rompemos el bucle y almacenamos indice para seleccionar color en plot
                 }
             }
         },
@@ -83,21 +85,17 @@
             x = 0;
             y = 0;
 
-            // Fall into attractor
-            for (var i = 0; i < 100; i += 1) {
-                next();
-            }
-
             // Bounce around hoping to settle on the bounding box
             for (var i = 0; i < 10000; i += 1) {
                 next();
+                // Reasignar limites del canvas
                 if (x < left) left = x;
                 if (x > right) right = x;
                 if (y < bottom) bottom = y;
                 if (y > top) top = y;
             }
 
-            // Adjust for a 1:1 aspect ratio.  This code reeks.
+            // Adjust for a 1:1 aspect ratio.
             if (top - bottom > right - left) {
                 left = (left + right - top + bottom) / 2;
                 right = left + top - bottom;
@@ -106,7 +104,7 @@
                 top = bottom + right - left;
             }
 
-            // TODO: Hack for now... wouldn't canvas transforms be awesome?
+            // Cuadra elementos dentro del canvas
             scaleX = width / (right - left);
             scaleY = height / (bottom - top);
             offsetX = (width * left) / (left - right);
@@ -117,12 +115,12 @@
          * Clears the pixel buffer then draws the current fractal, whatever it may be,
          */
         newPicture = function () {
-            // Clear pixel data
+            // Clear pixel data - Colorea el fondo
             for (var i = 0; i < width * height * 4; i += 4) {
-                pixels[i] = 0;
-                pixels[i+1] = 0;
-                pixels[i+2] = 0;
-                pixels[i+3] = 255;
+                pixels[i] = 0; //R
+                pixels[i+1] = 0; //G
+                pixels[i+2] = 0; //B
+                pixels[i+3] = 100; //T
             }
             ctx.putImageData(imageData, 0, 0);
 
@@ -133,6 +131,8 @@
         },
 
         /**
+         * MAIN METHOD 
+         * 
          * Draws a burst of points, then schedules itself to run again.
          */
         drawSomePoints = function () {
@@ -143,8 +143,7 @@
 
             for (var i = 0; i < 500; i += 1) {
                 var c = next();
-                plot(x, y, c);
-                //next();
+                plot(c);
             }
 
             // Dump the entire pixel data array to the canvas
@@ -153,11 +152,14 @@
             setTimeout(drawSomePoints, 500);
         },
 
-        select = document.getElementById("ifs-select"),
-        values = document.getElementById("values"),
-        refresh = document.getElementById("refresh"),
-        data = document.getElementById("data").childNodes;
 
+        select = document.getElementById("ifs-select"), // Desplegable fractales
+        values = document.getElementById("values"), // Cuadro de texto con valores del IFS
+        refresh = document.getElementById("refresh"), // boton cargar
+        data = document.getElementById("data").childNodes; // divs conteniendo diferentes fractales
+
+
+    // Creates select dropdown
     for (var i = 0, n = data.length; i < n; i++) {
         node = data[i];
         if (node.nodeType === 1) {
@@ -165,10 +167,12 @@
         }
     }
 
+    // Pulsar boton cargar
     refresh.onclick = function () {
         needRefresh = true;
     }
 
+    // Seleccionar fractal de desplegable
     select.onchange = function () {
         document.getElementById("values").value = select.options[select.selectedIndex].value;
         needRefresh = true;
@@ -178,3 +182,4 @@
     setTimeout(drawSomePoints, 500);
 
 }());
+
