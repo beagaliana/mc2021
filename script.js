@@ -11,11 +11,7 @@
         height = canvas.height,
         ctx = canvas.getContext("2d"),
         imageData = ctx.createImageData(width, height),
-        fractal = [
-            [-0.16666667,-0.1666667,0.16666667,-0.1666667,0.0000000,0.000000,0.163],
-            [0.83333333,0.2500000,-0.25000000,0.8333333,-0.1666667,-0.166667,0.600],
-            [0.33333333,-0.0833333,0.08333333,0.3333333,0.0833333,0.666667,0.237]
-        ],
+        fractal = [],
         x = 0,
         y = 0,
         scaleX = 1,
@@ -52,7 +48,7 @@
                 py = scaleY * y + offsetY,
                 base = (Math.floor(py) * width + Math.floor(px))*4;
 
-            elige_color_probabilidad = colors[c % 8];
+            if(!c) elige_color_probabilidad=colors[0]; else elige_color_probabilidad = colors[c % 8];
 
             pixels[base] = elige_color_probabilidad[0];
             pixels[base+1] = elige_color_probabilidad[1];
