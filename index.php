@@ -33,7 +33,7 @@ del código en GitHub
 
 </div>
 <div style="padding-left: 5%;">
-<canvas id="ifs" height="480" width="500">
+<canvas id="ifs" height="480" width="500" style="outline: rgb(127, 119, 235) 3px solid;">
     Whoa! Your browser doesn't support canvas?!?!
 </canvas>
 </div>
