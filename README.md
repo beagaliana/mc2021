@@ -14,12 +14,15 @@ En caso de que el usuario probando la aplicación no quisiera instalar PHP en su
 
 1. Abrimos una terminal y nos posicionamos en el directorio en el que queremos que se cree el repositorio clonado. 
 Clonamos el repositorio usando `git`:
+
 `$ git clone https://github.com/beagaliana/mc2021.git`
 
 2. Accedemos mediante `cd` a este repositorio que clonado previamente
+
 `$ cd mc2021`
 
 3. Lanzamos el servidor integrado de PHP en el puerto 8000
+
 `$ php -S localhost:8000`
 
 Ahora sólo tenemos que acceder a `http://localhost:8000` en nuestro navegador y ya tenemos la aplicación web desplegada y funcionando.
